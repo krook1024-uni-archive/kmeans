@@ -5,8 +5,8 @@ description = ""
 authors = ["Your Name <you@example.com>"]
 
 [tool.poetry.dependencies]
-python = "^3.9"
-sklearn = "^0.0"
+python = "^3"
+sklearn = "^.0"
 numpy = "^1.19.4"
 seaborn = "^0.11.0"
 
