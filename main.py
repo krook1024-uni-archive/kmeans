@@ -24,6 +24,7 @@
 
 # from sklearn.datasets import load_breast_cancer as lbc
 from sklearn.datasets.samples_generator import make_blobs
+from sklearn.datasets import load_breast_cancer
 import numpy as np
 import seaborn as sns
 import matplotlib.pyplot as plt
@@ -41,9 +42,6 @@ def init_centroids(arr, k, rng=np.random.RandomState(2020)):
     return _centroids[:k]
 
 
-from sklearn.metrics import pairwise_distances_argmin
-
-
 def adjust_centroids(X, centroids, k):
     # the same as pairwise_distances_argmin in sklearn :)
     labels = np.argmin(
@@ -58,7 +56,7 @@ def adjust_centroids(X, centroids, k):
 
     # Recalculate each centroid
     new_centroids = np.array(
-        [X[labels == i].mean() for i in range(k)]
+        [X[labels == i].mean(0) for i in range(k)]
     )
 
     return new_centroids, labels
@@ -104,8 +102,6 @@ centroids, labels = kmeans(X, 4)
 plt.scatter(X[:, 0], X[:, 1], c=labels)
 plt.scatter(centroids[:, 0], centroids[:, 1], c='#ff0000', marker='*')
 plt.show()
-
-from sklearn.datasets import load_breast_cancer
 
 breast_c = load_breast_cancer()
 X_breast_cancer = breast_c.data
