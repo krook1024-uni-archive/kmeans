@@ -45,11 +45,20 @@ from sklearn.metrics import pairwise_distances_argmin
 
 
 def adjust_centroids(X, centroids, k):
-    # TODO: rewrite this part in pure np
-    labels = pairwise_distances_argmin(X, centroids)
+    # the same as pairwise_distances_argmin in sklearn :)
+    labels = np.argmin(
+        np.sum(
+            np.abs(
+                X[:, None, :] - centroids[None, :, :]
+            ),
+            axis=-1
+        ),
+        axis=-1
+    )
 
+    # Recalculate each centroid
     new_centroids = np.array(
-        [X[labels == i].mean(0) for i in range(k)]
+        [X[labels == i].mean() for i in range(k)]
     )
 
     return new_centroids, labels
